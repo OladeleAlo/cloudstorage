@@ -150,6 +150,9 @@ class CloudStorageApplicationTests {
 		Homepage homePage = new Homepage(driver);
 		homePage.sendNote(title, description);
 
+		ResultPage resultpage = new ResultPage(driver, (JavascriptExecutor)driver);
+		resultpage.redirectToHome();
+
 		Thread.sleep(1000);
 		homePage.deleteNote();
 	}

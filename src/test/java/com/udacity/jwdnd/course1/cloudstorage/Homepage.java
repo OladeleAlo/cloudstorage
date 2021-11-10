@@ -97,7 +97,7 @@ public class Homepage {
     void logOut() { js.executeScript("arguments[0].click();", logoutButton); }
 
     public void sendNote(String title,String description ){
-        js.executeScript("argumemts[0].click();",addNote);
+        js.executeScript("arguments[0].click();",addNote);
         js.executeScript("arguments[0].value='" + title + "';", noteTitle);
         js.executeScript("arguments[0].value='" + description + "';", noteDescription);
         js.executeScript("arguments[0].click();", saveNote);
@@ -109,6 +109,7 @@ public class Homepage {
         js.executeScript("arguments[0].click();", saveNote);
     }
     public void deleteNote(){
+        js.executeScript("arguments[0].click()",navNotes);
         WebElement noteTable =  wait.until(WebDriver ->WebDriver.findElement(By.id("note-table")));
         js.executeScript("arguments[0].click()",deleteNote);
 
