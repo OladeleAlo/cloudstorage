@@ -11,7 +11,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
-class CloudStorageApplicationTests {
+class CloudTests {
 
 	String firstName = "ola";
 	String lastName = "dele";
@@ -84,8 +84,10 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals("Sign Up", driver.getTitle());
 	}
 
+
+
 	@Test
-	public void sendNote() throws InterruptedException {
+	public void AddNote() throws InterruptedException {
 		driver.get("http://localhost:" + this.port + "/signup");
 
 		SignupPage signupPage = new SignupPage(driver);
@@ -103,7 +105,7 @@ class CloudStorageApplicationTests {
 		driver.get("http://localhost:" + this.port + "/home");
 
 		Homepage homePage = new Homepage(driver);
-		homePage.sendNote(title, description);
+		homePage.AddNote(title, description);
 	}
 
 	@Test
@@ -148,7 +150,7 @@ class CloudStorageApplicationTests {
 		driver.get("http://localhost:" + this.port + "/home");
 
 		Homepage homePage = new Homepage(driver);
-		homePage.sendNote(title, description);
+		homePage.AddNote(title, description);
 
 		ResultPage resultpage = new ResultPage(driver, (JavascriptExecutor)driver);
 		resultpage.redirectToHome();
@@ -158,7 +160,7 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
-	public void sendCredentialTest() {
+	public void AddCredential() {
 		driver.get("http://localhost:" + this.port + "/signup");
 
 		SignupPage signuppage = new SignupPage(driver);
@@ -177,7 +179,7 @@ class CloudStorageApplicationTests {
 
 		Homepage homePage = new Homepage(driver);
 
-		homePage.sendCredential(credentialUrl, credentialUsername, credentialPassword);
+		homePage.AddCredential(credentialUrl, credentialUsername, credentialPassword);
 	}
 
 	@Test
@@ -200,7 +202,7 @@ class CloudStorageApplicationTests {
 
 		Homepage homePage = new Homepage(driver);
 
-		homePage.sendCredential(credentialUrl, credentialUsername, credentialPassword);
+		homePage.AddCredential(credentialUrl, credentialUsername, credentialPassword);
 
 		homePage.updateCredential(newCredentialUrl, newCredentialUsername, newCredentialPassword);
 	}
@@ -225,7 +227,7 @@ class CloudStorageApplicationTests {
 
 		Homepage homePage = new Homepage(driver);
 
-		homePage.sendCredential(credentialUrl, credentialUsername, credentialPassword);
+		homePage.AddCredential(credentialUrl, credentialUsername, credentialPassword);
 		Thread.sleep(3000);
 
 		homePage.deleteCredential();

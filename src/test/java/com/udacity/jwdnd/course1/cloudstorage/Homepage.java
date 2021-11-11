@@ -10,6 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class Homepage {
     private final JavascriptExecutor js;
     private  final WebDriverWait wait;
@@ -29,14 +32,16 @@ public class Homepage {
 
 
     @FindBy(id = "view-file-btn")
-   // private WebElement viewFileButton;
     private WebElement navNoteTabButton;
+
+    @FindBy(id = "upload-file-btn")
+    private WebElement uploadFileBtn;
 
     @FindBy(id = "delete-file-btn")
     private WebElement deleteFileButton;
 
     @FindBy(id = "nav-notes-tab")
-    private WebElement navNotes;
+    private WebElement navigNotes;
 
     @FindBy(id = "addNote")
     private WebElement addNote;
@@ -58,7 +63,7 @@ public class Homepage {
 
     // credentials and credentials operations
     @FindBy(id="nav-credentials")
-    private WebElement navCredentials;
+    private WebElement navigCredentials;
 
     @FindBy(id = "add-credential")
     private WebElement addCredential;
@@ -96,7 +101,15 @@ public class Homepage {
     }
     void logOut() { js.executeScript("arguments[0].click();", logoutButton); }
 
-    public void sendNote(String title,String description ){
+    void uploadNewFile(String fileName) throws Exception {
+        Files.createFile(Paths.get(fileName));
+        //String fileAbsolutePath = Paths.get("./testFile.txt").toAbsolutePath().toString();
+        //jsExecutor.executeScript("arguments[0].value='" + fileAbsolutePath + "';", fileUploadInput);
+        fileUploadInput.sendKeys(Paths.get(fileName).toAbsolutePath().toString());
+        js.executeScript("arguments[0].click();", uploadFileBtn);
+    }
+
+    public void AddNote(String title, String description ){
         js.executeScript("arguments[0].click();",addNote);
         js.executeScript("arguments[0].value='" + title + "';", noteTitle);
         js.executeScript("arguments[0].value='" + description + "';", noteDescription);
@@ -109,15 +122,15 @@ public class Homepage {
         js.executeScript("arguments[0].click();", saveNote);
     }
     public void deleteNote(){
-        js.executeScript("arguments[0].click()",navNotes);
+        js.executeScript("arguments[0].click()", navigNotes);
         WebElement noteTable =  wait.until(WebDriver ->WebDriver.findElement(By.id("note-table")));
         js.executeScript("arguments[0].click()",deleteNote);
 
     }
 
     // Credentials
-    public void sendCredential(String credentialUrl,String credentialUsername, String credentialPassword){
-        js.executeScript("arguments[0].click();", navCredentials);
+    public void AddCredential(String credentialUrl, String credentialUsername, String credentialPassword){
+        js.executeScript("arguments[0].click();", navigCredentials);
         js.executeScript("arguments[0].click();", addCredential);
         js.executeScript("arguments[0].value='" + credentialUrl + "';", credentialUrl);
         js.executeScript("arguments[0].value='" + credentialPassword + "';", credentialPassword);
@@ -125,7 +138,7 @@ public class Homepage {
     }
 
     public void updateCredential(String newCredentialUrl, String newCredentialUsername, String newCredentialPassword) {
-        js.executeScript("arguments[0].click();", navCredentials);
+        js.executeScript("arguments[0].click();", navigCredentials);
         js.executeScript("arguments[0].click();", addCredential);
         js.executeScript("arguments[0].value='" + newCredentialUrl + "';", newCredentialUrl);
         js.executeScript("arguments[0].value='" + newCredentialPassword + "';", newCredentialPassword);
