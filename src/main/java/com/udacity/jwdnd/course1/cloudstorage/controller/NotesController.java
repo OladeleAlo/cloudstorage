@@ -52,3 +52,4 @@ public class NotesController {
         return "redirect:/result?success";
     }
 }
+
