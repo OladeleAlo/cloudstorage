@@ -117,7 +117,7 @@ public class Homepage {
     }
     public void updateNote(String newTitle, String newDescription) {
         js.executeScript("arguments[0].click();", addNote);
-        js.executeScript("arguments[0].value='" + newTitle + "';", noteTitle);
+        js.executeScript("arguments[0].value='" +newTitle + "';" , noteTitle);
         js.executeScript("arguments[0].value='" + newDescription + "';", noteDescription);
         js.executeScript("arguments[0].click();", saveNote);
     }
