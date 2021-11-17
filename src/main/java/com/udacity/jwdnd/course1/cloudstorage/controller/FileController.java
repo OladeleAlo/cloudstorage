@@ -28,9 +28,26 @@ public class FileController {
     }
 
     @PostMapping("/fileUpload")
-    public String handleFileUpload(@RequestParam("fileUpload")MultipartFile fileUpload, Authentication authentication) throws IOException {
-       fileService.addFile(fileUpload,userService.getUser(authentication.getName()).getUserid());
-       return "redirect:/result?success";
+    //public String handleFileUpload(@RequestParam("fileUpload")MultipartFile fileUpload, Authentication authentication) throws IOException {
+      // fileService.addFile(fileUpload,userService.getUser(authentication.getName()).getUserid());
+      // return "redirect:/result?success";
+    //}
+    public String handleFileUpload(@RequestParam("fileUpload")MultipartFile fileUpload, Authentication authentication,Model model) throws IOException {
+
+        int fileid=userService.getUser(authentication.getName()).getUserid();
+        int count = 0;
+        if(fileService.findFile(fileid) == null)
+        {
+
+         //  count = count + fileService.addFile(fileUpload,fileid);// Perform the insert option
+        }
+
+        if(count>0){
+            model.addAttribute("success",true);
+        }else {
+            model.addAttribute("error",true);
+        }
+        return "redirect:/result?success";
     }
 
     @GetMapping("/view/{fileid}")
